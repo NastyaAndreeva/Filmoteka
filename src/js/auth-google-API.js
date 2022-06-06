@@ -38,18 +38,12 @@ const User = {
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    // ...
     console.log('User is signed in');
-    // console.log(user);
     console.log(user.displayName);
     User.user_name = user.displayName;
     User.user_email = user.email;
     User.user_uiid = user.uid;
   } else {
-    // User is signed out
-    // ...
     console.log('User is signed out');
   }
 });
@@ -63,11 +57,9 @@ function LogOut() {
   console.log('logout API');
   signOut(auth)
     .then(() => {
-      // Sign-out successful.
       console.log('Sign-out successful');
     })
     .catch(error => {
-      // An error happened.
       console.log('Sign-out error', error);
     });
 }
@@ -81,30 +73,13 @@ function addDocument(queue = [], watched = []) {
   });
 }
 
-// function getDocument() {
-//   console.log('get API');
-//   let data = null;
-//   const docum = onSnapshot(doc(db, 'users', User.user_uiid), doc => {
-//     console.log('Current data: ', doc.data());
-//     const dat = doc.data();
-//     console.log('API-data-1 ', dat);
-//     return dat;
-//   });
-//   // data = docum();
-//   console.log('API-data-2 ', data);
-//   return { queue: data.queue, watched: data.watched };
-// }
-
 async function getDocument() {
-  // console.log('get API');
   const docRef = doc(db, 'users', User.user_uiid);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    // console.log('Document data:', docSnap.data());
     return { queue: docSnap.data().queue, watched: docSnap.data().watched };
   } else {
-    // doc.data() will be undefined in this case
     console.log('No such document!');
   }
 }
