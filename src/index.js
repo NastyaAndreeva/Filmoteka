@@ -6,13 +6,14 @@ import {
 } from './movie-fetch';
 import authGoogleAPI from './js/auth-google-API';
 
-//From temp partial -- need to delete
+//!-- need to delete
+//From temp partial
 const container = document.querySelector('.container');
 const login = document.querySelector('.login');
 const logout = document.querySelector('.logout');
 const add = document.querySelector('.add');
 const get = document.querySelector('.get');
-//--END from temp partial -- need to delete
+//--END from temp partial
 
 //login click
 function onLoginClick() {
@@ -55,9 +56,10 @@ get.addEventListener('click', () => {
   const usr = authGoogleAPI.getDocument();
   usr
     .then(result => {
-      console.log(result);
+      console.log('Result ', result);
     })
     .catch(error => {
       console.log(error);
     });
 });
+//!END -- need to delete
