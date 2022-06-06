@@ -15,6 +15,7 @@ import {
   getDoc,
   doc,
   setDoc,
+  onSnapshot,
 } from 'firebase/firestore';
 import { log } from 'handlebars';
 // Initialize Firebase
@@ -48,9 +49,8 @@ onAuthStateChanged(auth, user => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
     // ...
-    console.log('User is signed in', uid);
+    console.log('User is signed in');
     console.log(user);
     console.log(user.displayName);
     User.user_name = user.displayName;
@@ -84,4 +84,12 @@ function addDocument(queue = [], watched = []) {
   });
 }
 
-export default { User, LogInByGoogle, LogOut, addDocument };
+async function getDocument() {
+  console.log('get API');
+  onSnapshot(doc(db, 'users', User.user_uiid), doc => {
+    console.log('Current data: ', doc.data());
+    return doc.data();
+  });
+}
+
+export default { User, LogInByGoogle, LogOut, addDocument, getDocument };

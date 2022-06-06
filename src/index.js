@@ -11,6 +11,7 @@ const container = document.querySelector('.container');
 const login = document.querySelector('.login');
 const logout = document.querySelector('.logout');
 const add = document.querySelector('.add');
+const get = document.querySelector('.get');
 //--END from temp partial -- need to delete
 
 //login click
@@ -44,4 +45,19 @@ login.addEventListener('click', onLoginClick);
 logout.addEventListener('click', () => {
   console.log('logout');
   authGoogleAPI.LogOut();
+});
+add.addEventListener('click', () => {
+  console.log('add');
+  authGoogleAPI.addDocument([1, 2, 3], [4, 5, 6]);
+});
+get.addEventListener('click', () => {
+  console.log('get');
+  const usr = authGoogleAPI.getDocument();
+  usr
+    .then(result => {
+      console.log(result);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
