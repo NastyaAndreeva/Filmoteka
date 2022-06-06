@@ -42,7 +42,7 @@ onAuthStateChanged(auth, user => {
     // https://firebase.google.com/docs/reference/js/firebase.User
     // ...
     console.log('User is signed in');
-    console.log(user);
+    // console.log(user);
     console.log(user.displayName);
     User.user_name = user.displayName;
     User.user_email = user.email;
