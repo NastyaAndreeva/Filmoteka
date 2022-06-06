@@ -74,5 +74,14 @@ function LogOut() {
       console.log('Sign-out error', error);
     });
 }
+function addDocument(queue = [], watched = []) {
+  console.log('add API');
+  setDoc(doc(db, 'users', User.user_uiid), {
+    name: User.user_name,
+    email: User.user_email,
+    queue: queue,
+    watched: watched,
+  });
+}
 
-export default { User, LogInByGoogle, LogOut };
+export default { User, LogInByGoogle, LogOut, addDocument };
