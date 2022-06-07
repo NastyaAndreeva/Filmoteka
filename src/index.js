@@ -51,6 +51,7 @@ async function generateMurkup() {
 
 generateMurkup();
 
+////////////////////////// Firebase //////////////////////////
 import { myUser } from './js/utils/auth-google-API';
 
 document.querySelector('.header-library__btnQue').addEventListener('click', () => {
@@ -59,10 +60,6 @@ document.querySelector('.header-library__btnQue').addEventListener('click', () =
 document.querySelector('.header-library__btnWatc').addEventListener('click', () => {
   console.log(userMovies.wathced);
 });
-document.querySelector('.theme').addEventListener('click', () => {
-  myUser.addToQueue(Math.random());
-  // console.log(object);
-})
 
 //!-- need to delete
 //From temp partial
