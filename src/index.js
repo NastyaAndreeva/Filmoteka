@@ -4,3 +4,4 @@ import {
   getTrendingMoviesData,
   getMoreTrendingMoviesData,
 } from './js/movie-fetch';
+import './js/utils/db';
