@@ -5,8 +5,7 @@ import {
   getMoreTrendingMoviesData,
   getGenresIds,
 } from './js/movie-fetch';
-
-import lightbox from './js/modal-film.js';
+import lightbox from './js/modal-film';
 
 import itemsTemplate from './templates/list-of-card.hbs';
 
