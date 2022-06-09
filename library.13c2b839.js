@@ -1,0 +1,2 @@
+const e=document.querySelector("#dark-theme"),t=document.querySelector(".body-theme");"dark-theme"===localStorage.getItem("color-theme")&&t.classList.add("dark-theme"),e.addEventListener("click",(function(){t.classList.toggle("dark-theme"),document.querySelector(".dark-theme")?(localStorage.setItem("checkbox-theme","true"),localStorage.setItem("color-theme","dark-theme")):(localStorage.removeItem("color-theme"),localStorage.removeItem("checkbox-theme"))}));""!==(localStorage.getItem("checkbox-theme")||"")&&(e.checked=!0);
+//# sourceMappingURL=library.13c2b839.js.map
