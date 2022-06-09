@@ -52,7 +52,9 @@ async function generateMurkup() {
 generateMurkup();
 
 ////////////////////////// Firebase //////////////////////////
-import { myUser } from './js/utils/auth-google-API';
+import currentUser from './js/storage/currentUser';
+import apiFirebase from './js/api/firebase';
+console.log(apiFirebase);
 
 document.querySelector('.header-library__btnQue').addEventListener('click', () => {
   console.log(userMovies.queue);
@@ -75,7 +77,7 @@ const stat = document.querySelector('.stat');
 //login click callback
 function onLoginClick() {
   console.log('login');
-  myUser.logInByGoogle();
+  apiFirebase.auth.logInByGoogle();
   // authGoogleAPI
   //   .LogInByGoogle()
   //   .then(result => {
@@ -94,36 +96,36 @@ login.addEventListener('click', onLoginClick);
 //Выход
 logout.addEventListener('click', () => {
   console.log('logout');
-  myUser.logOut();
+  apiFirebase.auth.logOut();
 });
 //Запись в базу данных
 add_queue.addEventListener('click', () => {
   console.log('add queue');
-  myUser.addToQueue(Math.random());
+  apiFirebase.add.addToQueue(Math.random());
   // Передаем методу два массива - первый очередь, второй просмотренные
   // authGoogleAPI.addDocument([1, 2, 3], [4, 5, 6]);
 });
 add_watched.addEventListener('click', () => {
   console.log('add watched');
-  myUser.addToWatched(Math.random());
+  apiFirebase.add.addToWatched(Math.random());
 });
 //Выборка данных из базы
-get.addEventListener('click', () => {
-  console.log('get');
-  const usr = authGoogleAPI.getDocument();
-  //Получаем промис с результатом в виде объекта с двумя массивами - очередь и просмотренные
-  usr
-    .then(result => {
-      console.log('Result ', result);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
+// get.addEventListener('click', () => {
+//   console.log('get');
+//   const usr = authGoogleAPI.getDocument();
+//   //Получаем промис с результатом в виде объекта с двумя массивами - очередь и просмотренные
+//   usr
+//     .then(result => {
+//       console.log('Result ', result);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// });
 //!END -- need to delete
 stat.addEventListener('click', () => {
   console.log('stat');
-  console.log(myUser);
+  console.log(currentUser);
 });
 
 // UserClass.authStateListener();
