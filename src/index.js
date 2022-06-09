@@ -47,8 +47,6 @@ async function generateMurkup() {
   gallery.insertAdjacentHTML('beforeend', itemsTemplate(movieCategories));
 }
 
-
-
 generateMurkup();
 
 ////////////////////////// Firebase //////////////////////////
@@ -56,17 +54,21 @@ import currentUser from './js/storage/currentUser';
 import apiFirebase from './js/api/firebase';
 console.log(apiFirebase);
 
-document.querySelector('.header-library__btnQue').addEventListener('click', () => {
-  console.log(userMovies.queue);
-});
-document.querySelector('.header-library__btnWatc').addEventListener('click', () => {
-  console.log(userMovies.wathced);
-});
+document
+  .querySelector('.header-library__btnQue')
+  .addEventListener('click', () => {
+    console.log(userMovies.queue);
+  });
+document
+  .querySelector('.header-library__btnWatc')
+  .addEventListener('click', () => {
+    console.log(userMovies.wathced);
+  });
 
 //!-- need to delete
 //From temp partial
-const container = document.querySelector('.container');
 const login = document.querySelector('.login');
+const Google = document.querySelector('.login-by-google');
 const logout = document.querySelector('.logout');
 const add_queue = document.querySelector('.add_queue');
 const add_watched = document.querySelector('.add_watched');
@@ -75,24 +77,23 @@ const stat = document.querySelector('.stat');
 //--END from temp partial
 
 //login click callback
-function onLoginClick() {
+function onGoogleClick() {
   console.log('login');
-  apiFirebase.auth.logInByGoogle();
-  // authGoogleAPI
-  //   .LogInByGoogle()
-  //   .then(result => {
-  //     const user = result.user;
-  //     console.log(user);
-  //     console.log(user.displayName);
-  //   })
-  //   .catch(error => {
-  //     const credential = GoogleAuthProvider.credentialFromError(error);
-  //     // ...
-  //     console.log('catch ', error, 'credential ', credential);
-  //   });
+  apiFirebase.auth
+    .logInByGoogle()
+    .then(result => {
+      const user = result.user;
+      console.log('in-then-google', user);
+      console.log(user.displayName);
+    })
+    .catch(error => {
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      console.log('catch ', error, 'credential ', credential);
+    });
 }
-//Вход
-login.addEventListener('click', onLoginClick);
+//Вход через Google
+Google.addEventListener('click', onGoogleClick);
 //Выход
 logout.addEventListener('click', () => {
   console.log('logout');
