@@ -1,4 +1,6 @@
-import { auth, provider } from './firebase_app';
+import app from './firebase_app';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -8,43 +10,71 @@ import {
   signInWithRedirect,
   signOut,
 } from 'firebase/auth';
-const auth = getAuth();
+const auth = getAuth(app);
 
 import currentUser from '../../storage/currentUser';
 
-function logIn(email, password) {
+onAuthStateChanged(auth, user => {
+  if (user) {
+    console.log('User is signed in');
+    console.log(user.email);
+    console.log(user.uid);
+    currentUser.userName = user.displayName;
+    currentUser.userEmail = user.email;
+    currentUser.userUiid = user.uid;
+  } else {
+    console.log('User is signed out');
+  }
+});
+
+async function logIn(email, password) {
   console.log('login API');
-  const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+  return await signInWithEmailAndPassword(auth, email, password);
 }
 
-function signUp(email, password) {
+function toggleSignIn() {
+  if (firebase.auth().currentUser) {
+    firebase.auth().signOut();
+  } else {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    if (email.length < 4) {
+      alert('Please enter an email address.');
+      return;
+    }
+    if (password.length < 4) {
+      alert('Please enter a password.');
+      return;
+    }
+    // Sign in with email and pass.
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+        // document.getElementById('quickstart-sign-in').disabled = false;
+      });
+  }
+  //   document.getElementById('quickstart-sign-in').disabled = true;
+}
+
+async function signUp(email, password) {
   console.log('signup API');
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+  return await createUserWithEmailAndPassword(auth, email, password);
 }
 
-function logInByGoogle() {
+async function logInByGoogle() {
   console.log('login Google API');
   const provider = new GoogleAuthProvider();
-  signInWithRedirect(auth, provider);
+  return await signInWithRedirect(auth, provider);
   // return getRedirectResult(auth);
 }
 function logOut() {
@@ -58,4 +88,4 @@ function logOut() {
     });
 }
 
-export default { logIn, signUp, logInByGoogle, logOut };
+export default { toggleSignIn, logIn, signUp, logInByGoogle, logOut };

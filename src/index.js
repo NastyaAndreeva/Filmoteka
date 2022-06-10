@@ -68,17 +68,35 @@ document
 //!-- need to delete
 //From temp partial
 const login = document.querySelector('.login');
+const signUp = document.querySelector('.signup');
 const Google = document.querySelector('.login-by-google');
 const logout = document.querySelector('.logout');
 const add_queue = document.querySelector('.add_queue');
 const add_watched = document.querySelector('.add_watched');
 const get = document.querySelector('.get');
 const stat = document.querySelector('.stat');
+const form = document.querySelector('.form');
+const inpEmail = document.querySelector('.email');
+const inpPassword = document.querySelector('.password');
 //--END from temp partial
 
 //login click callback
-function onGoogleClick() {
+function onLoginClick() {
   console.log('login');
+  apiFirebase.auth
+    .logIn(inpEmail, inpPassword)
+    .then(userCredential => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+}
+function onGoogleClick() {
+  console.log('login-Google');
   apiFirebase.auth
     .logInByGoogle()
     .then(result => {
@@ -94,22 +112,43 @@ function onGoogleClick() {
 }
 //Вход через Google
 Google.addEventListener('click', onGoogleClick);
+//Вход через email и пароль
+// login.addEventListener('click', onLoginClick);
+login.addEventListener('click', apiFirebase.auth.toggleSignIn);
+//Регистрация
+signUp.addEventListener('click', () => {
+  console.log('signUp');
+  apiFirebase.auth
+    .signUp(inpEmail.value, inpPassword.value)
+    .then(userCredential => {
+      // Signed in
+      const user = userCredential.user;
+      console.log('in-then-signUp', user);
+      console.log(user.displayName);
+      // ...
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+});
+
 //Выход
 logout.addEventListener('click', () => {
   console.log('logout');
   apiFirebase.auth.logOut();
 });
 //Запись в базу данных
-add_queue.addEventListener('click', () => {
-  console.log('add queue');
-  apiFirebase.add.addToQueue(Math.random());
-  // Передаем методу два массива - первый очередь, второй просмотренные
-  // authGoogleAPI.addDocument([1, 2, 3], [4, 5, 6]);
-});
-add_watched.addEventListener('click', () => {
-  console.log('add watched');
-  apiFirebase.add.addToWatched(Math.random());
-});
+// add_queue.addEventListener('click', () => {
+//   console.log('add queue');
+//   apiFirebase.add.addToQueue(Math.random());
+//   // Передаем методу два массива - первый очередь, второй просмотренные
+//   // authGoogleAPI.addDocument([1, 2, 3], [4, 5, 6]);
+// });
+// add_watched.addEventListener('click', () => {
+//   console.log('add watched');
+//   apiFirebase.add.addToWatched(Math.random());
+// });
 //Выборка данных из базы
 // get.addEventListener('click', () => {
 //   console.log('get');
@@ -124,9 +163,9 @@ add_watched.addEventListener('click', () => {
 //     });
 // });
 //!END -- need to delete
-stat.addEventListener('click', () => {
-  console.log('stat');
-  console.log(currentUser);
-});
+// stat.addEventListener('click', () => {
+//   console.log('stat');
+//   console.log(currentUser);
+// });
 
 // UserClass.authStateListener();
