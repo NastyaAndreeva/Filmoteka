@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+import Notiflix from 'notiflix';
 
 const API_KEY = '842344de8347536aefc6f17e8e76d4bd';
 const SEARCH_URL = `https://api.themoviedb.org/3/search/movie/`;
@@ -44,6 +45,16 @@ export async function getDataMovies(searchQuery) {
     },
   });
 
+  if (response.data.total_results === 0) {
+    Notiflix.Notify.failure(
+      'Sorry, there are no films matching your search query. Please try again.'
+    );
+    return;
+  } else {
+    Notiflix.Notify.success(
+      `Hooray! We found ${response.data.total_results} films.`
+    );
+  }
   return await response.data; // returns an object with request data{ page, results, total_pages, total_results }. To access the movies list (an array of objects) use response.data.results
 }
 
@@ -76,8 +87,8 @@ export async function getTrendingMoviesData() {
   return await response.data; // returns an object with request data{ page, results, total_pages, total_results }. To access the movies list (an array of objects) use response.data.results
 }
 
-export async function getMoreTrendingMoviesData() {
-  parameters.page += 1;
+export async function getMoreTrendingMoviesData(page) {
+  parameters.page = page;
 
   const response = await axios.get(`${TRENDING_URL}`, {
     params: {
@@ -86,7 +97,7 @@ export async function getMoreTrendingMoviesData() {
     },
   });
 
-  return await response.data; // returns an object with request data{ page, results, total_pages, total_results }. To access the movies list (an array of objects) use response.data.results
+  return response.data; // returns an object with request data{ page, results, total_pages, total_results }. To access the movies list (an array of objects) use response.data.results
 }
 
 //To make a request of one movie by movie-id, it is neccesary to pass movie-id as an function argument
@@ -117,4 +128,37 @@ export async function getOneMovieById(movieId) {
   });
 
   return movieData;
+}
+
+export async function generateMoviesWithGenres(data) {
+  const genres = await getGenresIds();
+
+  // Creating an object that stores data for handlebars template
+  return data.map(movie => {
+    const catArr = [];
+    const dataRelease = movie.release_date?.slice(0, 4) || 2022;
+    const nameOfFilm = movie.title.toUpperCase();
+    const movieInfo = {
+      name: nameOfFilm,
+      release: dataRelease,
+      id: movie.id,
+      genres: catArr,
+      poster_path: movie.poster_path,
+      backdrop_path: movie.backdrop_path,
+    };
+
+    // Comparing ganres taken from the general ganre array with IDs and adding ganres' values in the object for handlebars template
+    const genresFilm = function () {
+      movie.genre_ids.map(id =>
+        genres.find(el => {
+          if (el.id === id) {
+            return catArr.push(el.name);
+          }
+        })
+      );
+    };
+
+    genresFilm();
+    return movieInfo;
+  });
 }
