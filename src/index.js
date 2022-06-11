@@ -1,22 +1,16 @@
-import './js/pagination';
 import {
   getDataMovies,
   getMoreDataMovies,
   getTrendingMoviesData,
   getMoreTrendingMoviesData,
   getGenresIds,
-  getOneMovieById,
 } from './js/movie-fetch';
 
-import { initLightbox } from './js/modal-film.js';
+// import { initLightbox } from './js/modal-film.js';
 import itemsTemplate from './templates/list-of-card.hbs';
-import preloader from './templates/preloader.hbs';
-
-const gallery = document.querySelector('.gallery');
-const preloaderContainer = document.querySelector(".preloader");
-preloaderContainer.innerHTML = preloader();
 
 const form = document.querySelector("form");
+const gallery = document.querySelector('#home-gallery');
 
 async function generateMarkup() {
   const moviesData = await getTrendingMoviesData();
@@ -25,31 +19,21 @@ async function generateMarkup() {
   const movieCategories = await generateMoviesWithGenres(moviesData);
 
   // Rendering markup
-  setTimeout(() => {
-    preloaderContainer.innerHTML = '';
-    gallery.insertAdjacentHTML('beforeend', itemsTemplate(movieCategories));
-    footer.style.position = "static";
-  }, 2000)
-
+  // gallery.innerHTML = itemsTemplate(movieCategories);
 }
 
 async function onSearchSubmit(event) {
   event.preventDefault();
 
-  const moviesData = await getDataMovies(
-    event.currentTarget.elements.searchQuery.value
-  );
+  const moviesData = await getDataMovies(event.currentTarget.elements.searchQuery.value);
 
   const movieCategories = await generateMoviesWithGenres(moviesData);
 
   // Rendering markup
-
   gallery.innerHTML = itemsTemplate(movieCategories);
-
-  
 }
 
-async function generateMoviesWithGenres(data) {
+async function generateMoviesWithGenres(data){
   const genres = await getGenresIds();
 
   // Creating an object that stores data for handlebars template
@@ -84,4 +68,5 @@ async function generateMoviesWithGenres(data) {
 
 generateMarkup();
 
-form.addEventListener('submit', onSearchSubmit)
+// form.addEventListener("submit", onSearchSubmit);
+
