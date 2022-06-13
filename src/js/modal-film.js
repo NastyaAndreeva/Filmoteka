@@ -43,13 +43,8 @@ function onEscKeyDown(event) {
   }
 
 }
-function onCloseModalFilm() {
-   backdrop.classList.add("visually-hidden");
- window.removeEventListener('keydown', onEscKeyDown);
-//}
-//btnModalFilm.onclick = function() {
-//    backdrop.style.display = "none";
-//}
+
 function closeModalFilm() {
   backdrop.classList.add("visually-hidden");
+  window.removeEventListener('keydown', onEscKeyDown);
 }

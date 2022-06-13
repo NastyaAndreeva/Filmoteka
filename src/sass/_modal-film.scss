@@ -201,7 +201,7 @@
   border-radius: 50%;
   padding: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  z-index: 4;
+
   &:hover,
   &:focus {
     background: #ff6b01;
@@ -211,6 +211,6 @@
   fill: currentColor;
   &:hover,
   &:focus {
-    color: red;
+    color: var(--text-color-header);
   }
 }
