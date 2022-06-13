@@ -61,17 +61,12 @@ export async function getDataMovies(searchQuery) {
   return await response.data; // returns an object with request data{ page, results, total_pages, total_results }. To access the movies list (an array of objects) use response.data.results
 }
 
-export async function getMoreDataMovies(searchQuery) {
-  parameters.moviesPage =
-    parameters.searchQueryStr === searchQuery
-      ? (parameters.moviesPage += 1)
-      : (parameters.moviesPage = 1);
-
+export async function getMoreDataMovies(searchQuery, page) {
   const response = await axios.get(`${SEARCH_URL}`, {
     params: {
       api_key: API_KEY,
       query: searchQuery,
-      page: parameters.moviesPage,
+      page,
       language: pageLanguage,
     },
   });
@@ -141,6 +136,7 @@ export async function getOneMovieById(movieId) {
   const genresArr = [];
   // an object with all the necessary properties for further rendering
   const movieData = {
+    id: response.data.id,
     poster_path: response.data.poster_path
       ? response.data.poster_path
       : 'https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png',
@@ -157,7 +153,6 @@ export async function getOneMovieById(movieId) {
   response.data.genres.map(genre => {
     genresArr.push(genre.name);
   });
-
   return movieData;
 }
 
