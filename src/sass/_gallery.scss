@@ -19,22 +19,23 @@
   background: var(--bg-color);
   border-radius: 5px;
   object-fit: cover;
+  cursor: pointer;
   @media screen and (max-width: 419px) {
     margin-right: 0;
     margin-bottom: 20px;
+    width: 309px;
   }
-  cursor: pointer;
+
   @media screen and (min-width: $mob) {
     margin-right: 0;
     margin-bottom: 20px;
+    width: 309px;
   }
   @media screen and (min-width: $tab) {
     margin-right: 32px;
     margin-bottom: 32px;
-    width: 336px;
   }
   @media screen and (min-width: $desc) {
-    width: 309px;
     margin-right: 16px;
   }
 }
@@ -59,14 +60,14 @@
   line-height: 16px;
 }
 
-.movie-card img{
+.movie-card img {
   @media screen and (min-width: $mob) {
-    width: 280px;
-    height: 398px;
+    width: 309px;
+    height: 464px;
   }
   @media screen and (min-width: $tab) {
-    width: 346px;
-    height: 445px;
+    width: 309px;
+    height: 464px;
   }
   @media screen and (min-width: $desc) {
     width: 309px;
