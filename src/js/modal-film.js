@@ -71,10 +71,7 @@ function onEscKeyDown(event) {
 
 function onCloseModalFilm() {
   /* btnModalFilm.removeEventListener('click', onCloseModalFilm); */
-  refs.backdropFilm.classList.add('visually-hidden');
-  document.body.style.overflow = 'visible';
-  console.log(5555);
-  if (window.location.href.includes('library')) {
-    window.location.reload();
-  }
-}
+  refs.backdropFilm.classList.add("visually-hidden");
+  document.body.style.overflow = "visible";
+  if (window.location.href.includes('library')) { window.location.reload() }
+} 
