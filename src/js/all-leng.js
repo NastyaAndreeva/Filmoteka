@@ -227,8 +227,8 @@ const lengArr = {
       },
       "Andrii" :{
         "en" : "Andrii Korchevnyi",
-        "ru" : "****** **********",
-        "uk" : "****** **********",
+        "ru" : "Андрей Корчевный",
+        "uk" : "Андрій Корчевний",
       },
       "Vladislav" :{
         "en" : "Vladislav Zubin",
@@ -237,8 +237,8 @@ const lengArr = {
       },
       "Jenya" :{
         "en" : "Jenya Zaleskiy",
-        "ru" : "***** ********",
-        "uk" : "***** ********",
+        "ru" : "Женя Залеський",
+        "uk" : "Женя Залеський",
       },
       "Iryna" :{
         "en" : "Iryna Diachenko",
