@@ -333,6 +333,10 @@ body {
   font-weight: 500;
   line-height: 14px;
   z-index: 2;
+
+  @media screen and (min-width: 420px) {
+    top: 5px;
+  }
 }
 
 .header__select--option {
